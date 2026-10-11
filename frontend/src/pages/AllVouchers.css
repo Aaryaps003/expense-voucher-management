@@ -1,0 +1,276 @@
+
+.all-vouchers-page {
+  padding: 24px;
+  min-width: 0;
+}
+
+.all-vouchers-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.all-vouchers-heading h2 {
+  margin: 0 0 7px;
+  color: #22334d;
+  font-size: 20px;
+}
+
+.all-vouchers-heading p {
+  margin: 0;
+  color: #7d8aa0;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.voucher-filters {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  padding: 20px;
+  margin-bottom: 22px;
+  border: 1px solid #e4eaf2;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.av-field {
+  display: grid;
+  align-content: start;
+  gap: 7px;
+  min-width: 0;
+}
+
+.av-field label {
+  color: #44536a;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.av-field input,
+.av-field select {
+  width: 100%;
+  min-width: 0;
+  height: 40px;
+  padding: 0 10px;
+  border: 1px solid #dce3ed;
+  border-radius: 7px;
+  background: #ffffff;
+  color: #26364e;
+  font: inherit;
+  font-size: 12px;
+  outline: none;
+}
+
+.av-field input:focus,
+.av-field select:focus {
+  border-color: #4679c8;
+  box-shadow: 0 0 0 3px #4679c81c;
+}
+
+.av-filter-actions {
+  display: flex;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.av-button {
+  min-height: 38px;
+  padding: 9px 13px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.av-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.av-button.primary {
+  background: #244d91;
+  color: #ffffff;
+}
+
+.av-button.primary:hover:not(:disabled) {
+  background: #193b74;
+}
+
+.av-button.secondary {
+  border-color: #dce3ed;
+  background: #ffffff;
+  color: #405776;
+}
+
+.av-button.secondary:hover:not(:disabled) {
+  background: #f3f6fb;
+}
+
+.av-results-summary {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 12px;
+  color: #718096;
+  font-size: 12px;
+}
+
+.av-error {
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  border: 1px solid #f3cccc;
+  border-radius: 8px;
+  background: #fff0f0;
+  color: #a52828;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.av-table-wrapper {
+  overflow-x: auto;
+  border: 1px solid #e4eaf2;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.av-table {
+  width: 100%;
+  min-width: 850px;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 12px;
+}
+
+.av-table thead {
+  background: #f4f7fb;
+}
+
+.av-table th {
+  padding: 14px 15px;
+  color: #67768c;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+.av-table td {
+  padding: 15px;
+  border-top: 1px solid #edf0f5;
+  color: #506078;
+  vertical-align: middle;
+}
+
+.av-table tbody tr:hover {
+  background: #fafcff;
+}
+
+.av-table td strong,
+.av-table td small {
+  display: block;
+}
+
+.av-table td strong {
+  color: #2b3a51;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.av-table td small {
+  margin-top: 5px;
+  color: #8792a5;
+  font-size: 10px;
+}
+
+.av-table .av-amount {
+  color: #1c4f8e;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.av-status {
+  display: inline-block;
+  padding: 6px 9px;
+  border-radius: 20px;
+  background: #eef2f7;
+  color: #53647c;
+  font-size: 10px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.av-status.status-approved {
+  background: #e1f7ed;
+  color: #16835b;
+}
+
+.av-status.status-rejected {
+  background: #ffebeb;
+  color: #bd3737;
+}
+
+.av-status.status-pending-approval,
+.av-status.status-submitted {
+  background: #fff3d8;
+  color: #99640e;
+}
+
+.av-status.status-draft {
+  background: #edf1f6;
+  color: #617188;
+}
+
+.av-empty-cell {
+  padding: 45px 20px !important;
+  color: #8995a8 !important;
+  text-align: center;
+}
+
+.av-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding: 17px 0;
+  color: #7d8aa0;
+  font-size: 11px;
+}
+
+.av-page-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+@media (max-width: 900px) {
+  .voucher-filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .all-vouchers-page {
+    padding: 15px 0;
+  }
+
+  .voucher-filters {
+    grid-template-columns: 1fr;
+    padding: 14px;
+  }
+
+  .all-vouchers-heading {
+    align-items: flex-start;
+  }
+
+  .av-pagination {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

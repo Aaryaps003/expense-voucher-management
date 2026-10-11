@@ -2,7 +2,8 @@
 const multer = require("multer");
 const path = require("path");
 const crypto = require("crypto");
-const fs = require("fs/promises");
+const fs = require("fs");
+const fsp = require("fs/promises");
 const { fileTypeFromFile } = require("file-type");
 
 const UPLOAD_DIR = path.join(process.cwd(), "uploads");
@@ -13,23 +14,27 @@ const allowedTypes = {
   "image/webp": ".webp",
 };
 
+// Ensure the uploads directory exists.
+fs.mkdirSync(UPLOAD_DIR, { recursive: true });
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, UPLOAD_DIR);
   },
 
   filename: (req, file, cb) => {
-    // Never trust the original filename or extension.
     cb(null, `${crypto.randomUUID()}.upload`);
   },
 });
 
 const fileFilter = (req, file, cb) => {
-  // Early rejection only. Actual file contents are checked after upload.
-  if (!Object.keys(allowedTypes).includes(file.mimetype)) {
-    return cb(
-      new Error("Only JPEG, PNG, and WebP images are allowed")
+  if (!Object.prototype.hasOwnProperty.call(allowedTypes, file.mimetype)) {
+    const error = new Error(
+      "Only JPEG, PNG, and WebP images are allowed."
     );
+
+    error.code = "UNSUPPORTED_FILE_TYPE";
+    return cb(error);
   }
 
   cb(null, true);
@@ -44,15 +49,19 @@ const upload = multer({
   },
 });
 
-// Inspect the actual uploaded file before the controller processes it.
 const validateImageContent = async (req, res, next) => {
   if (!req.file) {
     return next();
   }
 
-  try {
-    const detected = await fileTypeFromFile(req.file.path);
+  const originalPath = req.file.path;
+  let finalPath;
 
+  try {
+    const detected = await fileTypeFromFile(originalPath);
+
+    // Validate the actual file contents, not just its extension
+    // or the MIME type supplied by the client.
     if (
       !detected ||
       !Object.prototype.hasOwnProperty.call(
@@ -60,41 +69,44 @@ const validateImageContent = async (req, res, next) => {
         detected.mime
       )
     ) {
-      await fs.unlink(req.file.path).catch(() => {});
+      await fsp.unlink(originalPath).catch(() => {});
 
       return res.status(400).json({
-        message: "Invalid image content. Upload a JPEG, PNG, or WebP image.",
+        message: "Invalid image content. Upload a valid JPEG, PNG, or WebP image.",
       });
     }
 
-    // Ensure the declared MIME type matches the detected content.
+    // The declared MIME type must match the detected content.
     if (req.file.mimetype !== detected.mime) {
-      await fs.unlink(req.file.path).catch(() => {});
+      await fsp.unlink(originalPath).catch(() => {});
 
       return res.status(400).json({
-        message: "Image content does not match its declared file type.",
+        message: "The uploaded file type does not match its contents.",
       });
     }
 
-    // Give the file a safe, server-generated extension.
-    const finalPath =
-      `${req.file.path.slice(0, -".upload".length)}` +
+    finalPath =
+      originalPath.slice(0, -".upload".length) +
       allowedTypes[detected.mime];
 
-    await fs.rename(req.file.path, finalPath);
+    await fsp.rename(originalPath, finalPath);
 
     req.file.path = finalPath;
     req.file.filename = path.basename(finalPath);
     req.file.mimetype = detected.mime;
 
-    next();
+    return next();
   } catch (error) {
-    await fs.unlink(req.file.path).catch(() => {});
+    await fsp.unlink(originalPath).catch(() => {});
+
+    if (finalPath) {
+      await fsp.unlink(finalPath).catch(() => {});
+    }
 
     console.error("Image validation failed:", error.message);
 
     return res.status(400).json({
-      message: "Unable to validate uploaded image.",
+      message: "Unable to validate the uploaded image.",
     });
   }
 };

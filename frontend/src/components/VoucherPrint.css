@@ -1,0 +1,34 @@
+.voucher-print-control {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+.voucher-print-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 10px;
+  background: #243b6b;
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity .2s ease, transform .2s ease;
+}
+.voucher-print-button:hover:not(:disabled) {
+  opacity: .92;
+  transform: translateY(-1px);
+}
+.voucher-print-button:disabled {
+  opacity: .6;
+  cursor: wait;
+}
+.voucher-print-error {
+  margin: 0;
+  max-width: 300px;
+  color: #b42318;
+  font-size: 12px;
+}
