@@ -2,7 +2,7 @@
 
 ExpenseFlow is a role-based web application for creating, submitting, reviewing, and managing employee expense vouchers. It supports an approval workflow with employee and director signatures, dashboards, reporting, and exports.
 
-> **Internship assessment project.** Use dummy data for demonstrations, not real financial or personal information.
+> **Internship assessment project.**
 
 ## Features
 
@@ -191,22 +191,6 @@ Draft editing and deletion are restricted to the owning employee and are not ava
 - Use HTTPS and hosting-provider secrets if deploying publicly.
 - Do not use real financial or personal data in a demo deployment.
 
-## Screenshots
-
-Add screenshots from the final application to this section. Use dummy data and avoid showing real names, email addresses, tokens, signatures, database URLs, or other sensitive information.
-
-Suggested screenshots:
-- Login page
-- Employee dashboard and voucher creation
-- Director dashboard and voucher review
-- Accounts dashboard and reports
-- Example PDF or CSV export
-
-Store screenshots in a folder such as `docs/screenshots/` and embed them with relative paths only after the screenshot files have been added. For example:
-
-```md
-![ExpenseFlow login page](docs/screenshots/login.png)
-```
 
 ## Assessment Demo Checklist
 
@@ -233,7 +217,6 @@ Check whether environment files and uploads are tracked:
 git ls-files | Select-String '(^|/)\.env($|\.)|(^|/)uploads/'
 ```
 
-If secrets have been committed or exposed, rotate them; removing the file alone is not sufficient.
 
 ## Notes
 
